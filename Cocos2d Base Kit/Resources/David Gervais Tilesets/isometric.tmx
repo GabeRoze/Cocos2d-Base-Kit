@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="50" height="50" tilewidth="52" tileheight="26">
+ <tileset firstgid="1" name="dg_iso32" tilewidth="54" tileheight="49">
+  <image source="dg_iso32.png" width="756" height="735"/>
+  <tile id="24">
+   <properties>
+    <property name="endtile" value="YES"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="startTile" value="YES"/>
+   </properties>
+  </tile>
+  <tile id="101">
+   <properties>
+    <property name="wall" value="YES"/>
+   </properties>
+  </tile>
+  <tile id="114">
+   <properties>
+    <property name="wall" value="YES"/>
+   </properties>
+  </tile>
+  <tile id="195">
+   <properties>
+    <property name="gem" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="GroundLayer" width="50" height="50">
+  <properties>
+   <property name="cc_vertexz" value="-1000"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztlcERgzAMBF1KKsibT9pxbymHjuDDjMcD1gmwfCT32A/gQWtL5zmlNAshhBDiL8grn4IcRA+PqSDvPKtB6rTWR3sgdaG+vT1adaN77PXr7TGl6x5Wr7F4nJ1teeAe9X+svkJzKtLjBez3UX2eWRnp8TXqY/bY6y/LozUL0R5otiLz8hQP685g9vBk8CgPy8XKX5Y5b811K4OZPNA6ztyHDB6eGjfeZB5HDmgWjPBA7odW5jJ6WPuO9tpID6R/vB71OW7vn+JhrY/yQObdm8Ul0R5obd7vR/cVAtN5XHFi9rgbefy2hxBCCCF4WQBneTiV
+  </data>
+ </layer>
+ <layer name="GroundObjectsLayer" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJzt1EERADAIAzD865qwWeA1BiQKuGtLBABAT6f6AOA5u59Fnkym373JD/5mo0CWfwEAADtdsU0FXQ==
+  </data>
+ </layer>
+ <layer name="ObjectsLayer" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztzjENAAAIA7Bpw78oTCzhoFXQBAAAAICmuQ4AAAAAADy1upsAQw==
+  </data>
+ </layer>
+ <layer name="InteractionLayer" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztz7kNADAMAzGvYXj/PdNkBz8ggeulCAAAAAAAYJL8bXflB8AU1T0AAGCBB/TeAIA=
+  </data>
+ </layer>
+</map>
