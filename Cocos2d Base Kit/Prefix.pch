@@ -13,4 +13,5 @@
 #import <Foundation/Foundation.h>
 #import "CCBReader.h"
 #import "cocos2d.h"
+#import "Config.h"
 #endif

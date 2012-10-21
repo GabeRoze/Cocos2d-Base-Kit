@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="30" height="32" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="dg_grounds32" tilewidth="32" tileheight="32">
+  <image source="dg_grounds32.png" width="288" height="608"/>
+ </tileset>
+ <layer name="Background" width="30" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKGL+v1TrMdQcNVUVVX1+QN9YWgQ
+  </data>
+ </layer>
+ <objectgroup name="ObjectLayer" width="30" height="32"/>
+</map>

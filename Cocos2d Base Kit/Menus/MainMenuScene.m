@@ -13,13 +13,13 @@
 
 - (void) didLoadFromCCB
 {
-    CCLOG(@"asdasdasdasdasdasda==========");
+    CCLOG(@"Main menu did load==========");
 }
 
 -(void)playTapped:(id)sender
 {
     CCLOG(@"====PLAY!====");
-    //scene manager begin game
+    [GameStateManager.instance loadSceneWithTargetScene:TargetSceneBeginGame];
 }
 
 -(void)optionsTapped:(id)sender

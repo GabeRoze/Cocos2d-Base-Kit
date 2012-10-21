@@ -32,7 +32,7 @@
     //http://www.cocos2d-iphone.org/forum/topic/2242
 
     nextScene = targetScene;
-    [self performSelector:@selector(load) withObject:nil afterDelay:2.0f];
+    [self performSelector:@selector(load) withObject:nil afterDelay:1.0f];
 }
 
 -(void)load
@@ -44,6 +44,9 @@
             break;
         case TargetSceneOptionsScene:
             [[CCDirector sharedDirector] replaceScene:[CCBReader sceneWithNodeGraphFromFile:@"OptionsScene.ccbi"]];
+            break;
+        case TargetSceneBeginGame:
+            [[CCDirector sharedDirector] replaceScene:[CCBReader sceneWithNodeGraphFromFile:@"GameLevelScene.ccbi"]];
             break;
         default:
             // Always warn if an unspecified enum value was used. It's a reminder for yourself to update the switch

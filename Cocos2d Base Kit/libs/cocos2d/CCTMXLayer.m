@@ -162,7 +162,7 @@ int compareInts (const void * a, const void * b);
 #pragma mark CCTMXLayer - setup Tiles
 
 -(CCSprite*) reusedTileWithRect:(CGRect)rect
-{	
+{
 	if( ! reusedTile_ ) {
 		reusedTile_ = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect rotated:NO];
 		[reusedTile_ setBatchNode:self];
@@ -172,7 +172,7 @@ int compareInts (const void * a, const void * b);
 		// XXX: should not be re-init. Potential memeory leak. Not following best practices
 		// XXX: it shall call directory  [setRect:rect]
 		[reusedTile_ initWithTexture:textureAtlas_.texture rect:rect rotated:NO];
-		
+
 		// Since initWithTexture resets the batchNode, we need to re add it.
 		// but should be removed once initWithTexture is not called again
 		[reusedTile_ setBatchNode:self];
@@ -307,7 +307,7 @@ int compareInts (const void * a, const void * b);
 	// Bits on the far end of the 32-bit global tile ID are used for tile flags
 
 	uint32_t tile = tiles_[idx];
-	
+
 	// issue1264, flipped tiles can be changed dynamically
 	if (flags)
 		*flags = tile & kCCFlipedAll;
@@ -323,13 +323,13 @@ int compareInts (const void * a, const void * b);
 	[sprite setVertexZ: [self vertexZForPos:pos]];
 	sprite.anchorPoint = CGPointZero;
 	[sprite setOpacity:opacity_];
-	
+
 	//issue 1264, flip can be undone as well
 	sprite.flipX = NO;
 	sprite.flipY = NO;
 	sprite.rotation = 0;
 	sprite.anchorPoint = ccp(0,0);
-	
+
 	// Rotation in tiled is achieved using 3 flipped states, flipping across the horizontal, vertical, and diagonal axes of the tiles.
 	if (gid & kCCTMXTileDiagonalFlag)
 	{
@@ -365,7 +365,7 @@ int compareInts (const void * a, const void * b);
 	{
 		if (gid & kCCTMXTileHorizontalFlag)
 			sprite.flipX = YES;
-		
+
 		if (gid & kCCTMXTileVerticalFlag)
 			sprite.flipY = YES;
 	}
@@ -414,7 +414,7 @@ int compareInts (const void * a, const void * b);
 	CCSprite *tile = [self reusedTileWithRect:rect];
 
 	[self setupTileSprite:tile position:pos withGID:gid];
-	
+
 	// get atlas index
 	NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
 
@@ -489,7 +489,7 @@ int compareInts (const void * a, const void * b)
 #pragma mark CCTMXLayer - adding / remove tiles
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos
 {
-	[self setTileGID:gid at:pos withFlags:NO];	
+	[self setTileGID:gid at:pos withFlags:NO];
 }
 
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos withFlags:(ccTMXTileFlags)flags
@@ -500,7 +500,7 @@ int compareInts (const void * a, const void * b)
 
 	ccTMXTileFlags currentFlags;
 	uint32_t currentGID = [self tileGIDAt:pos withFlags:&currentFlags];
-	
+
 	if (currentGID != gid || currentFlags != flags )
 	{
 		uint32_t gidAndFlags = gid | flags;
@@ -524,7 +524,7 @@ int compareInts (const void * a, const void * b)
 
 				[sprite setTextureRect:rect rotated:NO untrimmedSize:rect.size];
 
-				if (flags) 
+				if (flags)
 					[self setupTileSprite:sprite position:[sprite position] withGID:gidAndFlags];
 
 				tiles_[z] = gidAndFlags;

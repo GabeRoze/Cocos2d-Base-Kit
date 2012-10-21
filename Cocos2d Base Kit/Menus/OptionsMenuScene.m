@@ -7,8 +7,15 @@
 //
 
 #import "OptionsMenuScene.h"
-
+#import "GameStateManager.h"
 
 @implementation OptionsMenuScene
+
+
+-(IBAction)backTapped:(id)sender
+{
+    CCLOG(@"back to main menu=================");
+    [GameStateManager.instance loadSceneWithTargetScene:TargetSceneMainMenu];
+}
 
 @end

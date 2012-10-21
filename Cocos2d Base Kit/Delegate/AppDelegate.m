@@ -9,7 +9,6 @@
 #import "cocos2d.h"
 
 #import "AppDelegate.h"
-#import "IntroLayer.h"
 #import "GameStateManager.h"
 
 @implementation AppController
@@ -25,7 +24,7 @@
 	// Create an CCGLView with a RGB565 color buffer, and a depth buffer of 0-bits
 	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGB565	//kEAGLColorFormatRGBA8
-								   depthFormat:0	//GL_DEPTH_COMPONENT24_OES
+								   depthFormat:GL_DEPTH_COMPONENT24_OES	//GL_DEPTH_COMPONENT24_OES<- use for isometric tile maps otherwise 0
 							preserveBackbuffer:NO
 									sharegroup:nil
 								 multiSampling:NO
@@ -90,7 +89,7 @@
 	[window_ makeKeyAndVisible];
 
 	return YES;
-}   
+}
 
 // Supported orientations: Landscape. Customize it for your own needs
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
