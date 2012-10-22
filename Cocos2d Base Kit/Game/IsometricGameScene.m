@@ -99,17 +99,9 @@
 
 -(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    // get the position in tile coordinates from the touch location
     CGPoint touchLocation = [self locationFromTouches:touches];
-    CGPoint tilePos = [self tilePosFromLocation:touchLocation tileMap:levelTileMap];
-
-
+//    CGPoint tilePos = [self tilePosFromLocation:touchLocation tileMap:levelTileMap];
     [player movePlayerToPosition:touchLocation tileMap:levelTileMap];
-
-    // move tilemap so that touched tiles is at center of screen
-//    [self centerTileMapOnTileCoord:tilePos tileMap:levelTileMap];
-
-    //corrects player's Z position so they can be behind tiles
 //    [player updateVertexZ:tilePos tileMap:levelTileMap];
 }
 
@@ -133,11 +125,9 @@
 
     player = [Player player];
     player.position = CGPointMake(screenSize.width*0.5, screenSize.height*0.5);
-
     //modify this to center player on tile (0.5,0.5) original value
     player.anchorPoint = CGPointMake(0.3f, 0.1f);
     [self addChild:player];
-    player.currentPlayerMap = levelTileMap;
 
 
     self.isTouchEnabled = YES;

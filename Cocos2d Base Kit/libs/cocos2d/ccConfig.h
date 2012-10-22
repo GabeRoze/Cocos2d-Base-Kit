@@ -45,15 +45,15 @@
  @since v2.0.0
  */
 #ifndef CC_ENABLE_GL_STATE_CACHE
-#define CC_ENABLE_GL_STATE_CACHE 0
+#define CC_ENABLE_GL_STATE_CACHE 1
 #endif
 
 /** @def CC_ENABLE_DEPRECATED
  If enabled, cocos2d will compile all deprecated methods, classes and free functions. Also, renamed constants will be active as well.
  Enable it only when migrating a v1.0 or earlier v2.0 versions to the most recent cocdos2d version.
- 
+
  Default value: Enabled by default
- 
+
  @since v2.0.0
  */
 #ifndef CC_ENABLE_DEPRECATED
@@ -111,7 +111,7 @@
  To enable set it to a 1, to disable it set to 0. Enabled by default.
 
  Only valid for cocos2d-ios. Not supported on cocos2d-mac.
- 
+
  This is an EXPERIMENTAL feature. Do not use it unless you are a developer.
 
  */
@@ -133,7 +133,7 @@
 	CC_MAC_USE_DISPLAY_LINK_THREAD  (default)
 	CC_MAC_USE_OWN_THREAD
 	CC_MAC_USE_MAIN_THREAD
- 
+
  Only valid for cocos2d-mac. Not supported on cocos2d-ios.
 
  */
@@ -176,9 +176,9 @@
  By default, CCTextureAtlas (used by many cocos2d classes) will use VAO (Vertex Array Objects).
  Apple recommends its usage but they might consume a lot of memory, specially if you use many of them.
  So for certain cases, where you might need hundreds of VAO objects, it might be a good idea to disable it.
- 
+
  To disable it set it to 0. Enabled by default.
- 
+
  */
 #ifndef CC_TEXTURE_ATLAS_USE_VAO
 #define CC_TEXTURE_ATLAS_USE_VAO 1

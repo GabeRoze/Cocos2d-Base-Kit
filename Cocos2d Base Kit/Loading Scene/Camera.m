@@ -11,4 +11,22 @@
 
 @implementation Camera
 
+
+
+
+
+
+
++(Camera*)instance
+{
+    static Camera* instance = nil;
+
+    if (!instance)
+    {
+        instance = [Camera new];
+    }
+
+    return instance;
+}
+
 @end

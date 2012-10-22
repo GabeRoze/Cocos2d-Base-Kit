@@ -16,10 +16,15 @@
     BOOL isMoving;
     CGPoint startLocation;
     CGPoint endLocation;
+
+//    CGPoint playerStartLocation;
+//    CGPoint playerEndLocation;
+
+
     ccTime travelTime;
+    float moveDuration;
     float travelPercent;
     float travelIncrement;
-    NSMutableArray *moveLine;
 
 }
 

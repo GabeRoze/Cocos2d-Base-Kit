@@ -9,8 +9,12 @@
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 
-@interface Camera : CCNode {
-    
+@interface Camera : CCNode
+{
+
 }
+
+
++(Camera*)instance;
 
 @end

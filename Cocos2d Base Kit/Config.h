@@ -5,7 +5,7 @@
 //  Created by Gabe Rozenberg on 12-10-18.
 //
 //
-
+\
 #import <Foundation/Foundation.h>
 
 @interface Config : NSObject
@@ -17,8 +17,7 @@
  */
 #define LEVEL_NAME_PREFIX @"Level"
 
-
 //Player config
-#define PLAYER_SPEED 50.0
+#define PLAYER_SPEED 200.0
 
 @end

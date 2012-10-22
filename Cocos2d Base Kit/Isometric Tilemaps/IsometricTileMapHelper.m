@@ -44,7 +44,7 @@
 
 +(BOOL) isTilePosBlocked:(CGPoint)tilePos tileMap:(CCTMXTiledMap*)tileMap
 {
-    tilePos = [IsometricTileMapHelper tilePosFromLocation:tilePos tileMap:tileMap];
+//    tilePos = [IsometricTileMapHelper tilePosFromLocation:tilePos tileMap:tileMap];
     CCTMXLayer* layer = [tileMap layerNamed:@"WallLayer"];
     NSAssert(layer != nil, @"Collisions layer not found!");
 

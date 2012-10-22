@@ -30,6 +30,13 @@ typedef enum
     CCTMXLayer *interactionLayer;
     Player *player;
 
+    BOOL isMoving;
+    CGPoint startLocation;
+    CGPoint endLocation;
+    ccTime travelTime;
+    float travelPercent;
+    float travelIncrement;
+
     CGSize screenSize;
     CGPoint screenCenter;
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="50" height="50" tilewidth="104" tileheight="52">
+ <tileset firstgid="1" name="dg_iso32-hd" tilewidth="108" tileheight="98">
+  <image source="dg_iso32-hd.png" width="1512" height="1470"/>
+  <tile id="24">
+   <properties>
+    <property name="endtile" value="YES"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="startTile" value="YES"/>
+   </properties>
+  </tile>
+  <tile id="101">
+   <properties>
+    <property name="wall" value="YES"/>
+   </properties>
+  </tile>
+  <tile id="114">
+   <properties>
+    <property name="wall" value="YES"/>
+   </properties>
+  </tile>
+  <tile id="195">
+   <properties>
+    <property name="gem" value="1"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="GroundLayer" width="50" height="50">
+  <properties>
+   <property name="cc_vertexz" value="-1000"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKHL8/0DLsdAwVVTVVVVVVVVVVXV5w8OUJo4
+  </data>
+ </layer>
+ <layer name="WallLayer" width="50" height="50">
+  <properties>
+   <property name="cc_vertexz" value="automatic"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztlcERwyAMBKnIHaQdenM3Lil5MgxIJztIIjnN7COO5dwaQa5SykUIIYSQv6B+eDVUJ1Z4tFUH1/pCcmr93h5ILinvqHeVh5QbfceW2sUjaq6sHnf3tqdHKXt79L8jeUgufXl6SNm1fFpl8TiVfJk9Rp81D2kveHugZyuyX3bxmLnt4oGewVEeiIs0T1qPt4clTzYP9Gy6838YsR5afmRvHMIzVnsg589sPUZ9UR4zBySn1hvlob13dNYiPZD5sXq019vvd/HQ+r08kOxP7o/wQLJZ74+eK6QyrccTp8we34Yev+1BCCGEkLy8AfUu1xg=
+  </data>
+ </layer>
+ <layer name="GroundObjectsLayer" width="50" height="50">
+  <properties>
+   <property name="cc_vertexz" value="automatic"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1EERADAIAzD865qwWeA1BiQKuGtLBABAT6f6AOA5u59Fnkym373JD/5mo0CWfwEAADtdsU0FXQ==
+  </data>
+ </layer>
+ <layer name="ObjectsLayer" width="50" height="50">
+  <properties>
+   <property name="cc_vertexz" value="automatic"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztzjENAAAIA7Bpw78oTCzhoFXQBAAAAICmuQ4AAAAAADy1upsAQw==
+  </data>
+ </layer>
+ <layer name="InteractionLayer" width="50" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztz7kNADAMAzGvYXj/PdNkBz8ggeulCAAAAAAAYJL8bXflB8AU1T0AAGCBB/TeAIA=
+  </data>
+ </layer>
+</map>

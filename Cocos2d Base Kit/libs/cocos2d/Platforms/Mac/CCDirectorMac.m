@@ -28,7 +28,7 @@
 #import "../../ccMacros.h"
 #ifdef __CC_PLATFORM_MAC
 
-#import <sys/time.h>
+#importmoveDuration
 
 #import "CCDirectorMac.h"
 #import "CCEventDispatcher.h"
@@ -119,7 +119,7 @@
 - (void) setFullScreen:(BOOL)fullscreen
 {
 //	isFullScreen_ = !isFullScreen_;
-//		
+//
 //	if (isFullScreen_)
 //	{
 //		[self.view enterFullScreenMode:[[self.view window] screen] withOptions:nil];
@@ -129,7 +129,7 @@
 //		[self.view exitFullScreenModeWithOptions:nil];
 //		[[self.view window] makeFirstResponder: self.view];
 //	}
-//	
+//
 //	return;
 
 	// Mac OS X 10.6 and later offer a simplified mechanism to create full-screen contexts
@@ -189,7 +189,7 @@
         [windowGLView_ makeKeyAndOrderFront:self];
 		[windowGLView_ makeMainWindow];
     }
-	
+
 	// issue #1189
 	[windowGLView_ makeFirstResponder:openGLview];
 
@@ -404,7 +404,7 @@
 	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
 
 	[pool release];
-		
+
 #else
 	[self performSelector:@selector(drawScene) onThread:runningThread_ withObject:nil waitUntilDone:YES];
 #endif
@@ -448,7 +448,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 
 	// Activate the display link
 	CVDisplayLinkStart(displayLink);
-    
+
     isAnimating_ = YES;
 }
 
@@ -472,7 +472,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
         runningThread_ = nil;
 #endif
 	}
-    
+
     isAnimating_ = NO;
 }
 
@@ -541,10 +541,10 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	kmGLPopMatrix();
 
 	totalFrames_++;
-	
+
 
 	// flush buffer
-	[self.view.openGLContext flushBuffer];	
+	[self.view.openGLContext flushBuffer];
 
 	[self.view unlockOpenGLContext];
 

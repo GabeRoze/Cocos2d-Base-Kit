@@ -29,133 +29,55 @@
 {
     travelTime = 0;
     travelPercent = 0;
-    startLocation = self.position;
-    endLocation = newPosition;
-    CGPoint p = ccpLerp(self.position, newPosition, 0.0);
+    currentPlayerMap = tileMap;
+    startLocation = tileMap.position;
+
+    CGPoint diff = ccpSub(self.position, newPosition);
+    CGPoint mapDiff = ccpAdd(tileMap.position, diff);
+
+    endLocation = mapDiff;
 
 
     float moveDistance = ccpDistance(startLocation, endLocation);
-    float moveSpeed = PLAYER_SPEED;
-    float time = moveDistance/moveSpeed; // in seconds
-
-//    double animationInterval = CCDirector.sharedDirector.animationInterval;
-
-    float deltaTime = CCDirector.sharedDirector.secondsPerFrame;
-
-
-    travelIncrement = deltaTime/time;
-
-//    CCLOG(@"delta time %f", deltaTime);
-//    CCLOG(@"travel increment %f", travelIncrement);
-//    CCLOG(@"move speed %f", PLAYER_SPEED);
 //    CCLOG(@"move distance %f", moveDistance);
-//    CCLOG(@"time %f", time);
-//    CCLOG(@"animinterval %f", deltaTime);
-//    CCLOG(@"travel Percent 0 %f", travelPercent);
+    float moveSpeed = PLAYER_SPEED;
+//    CCLOG(@"move speed %f", moveSpeed);
+    moveDuration = moveDistance/moveSpeed; // in seconds
+//    CCLOG(@"moveDuration %f", moveDuration);
+    float deltaTime = 1.0f/60.0f;//CCDirector.sharedDirector.secondsPerFrame;
+//    CCLOG(@"deltaTime %f", deltaTime);
+//    CCLOG(@"seconds per frame %f", CCDirector.sharedDirector.secondsPerFrame);
 
-//    CCLOG(@"lerp 1 x%f y%f", p.x, p.y);
+    travelIncrement = deltaTime/ moveDuration;
+//    CCLOG(@"travelIncrement %f", travelIncrement);
 
     [self unscheduleUpdate];
     [self scheduleUpdate];
-
-
-//    if (denominator != 0 && numerator != 0)
-//    {
-//        slope = numerator/denominator;
-//
-//        float lowX = MIN(newPosition.x, self.position.x);
-//        float highX = MAX(newPosition.x, self.position.x);
-//
-//        for (float i = lowX; i <= highX; i++)
-//        {
-//            float newY = i*slope;
-//            [moveLine addObject:[NSValue valueWithCGPoint:CGPointMake(i, newY)]];
-//        }
-//    }
-//    else if (numerator == 0)
-//    {
-//        float lowX = MIN(newPosition.x, self.position.x);
-//        float highX = MAX(newPosition.x, self.position.x);
-//
-//        for (float i = lowX; i <= highX; i++)
-//        {
-//            [moveLine addObject:[NSValue valueWithCGPoint:CGPointMake(i, self.position.y)]];
-//        }
-//    }
-//    else if (denominator == 0)
-//    {
-//        float lowY = MIN(newPosition.y, self.position.y);
-//        float highY = MAX(newPosition.y, self.position.y);
-//
-//        for (float i = lowY; i <= highY; i++)
-//        {
-//            [moveLine addObject:[NSValue valueWithCGPoint:CGPointMake(self.position.x, i)]];
-//        }
-//    }
-//
-//    for (int i = 0; i < moveLine.count; i++)
-//    {
-//        CGPoint linePoint = [[moveLine objectAtIndex:i] CGPointValue];
-//
-//        if ([IsometricTileMapHelper isTilePosBlocked:linePoint tileMap:tileMap])
-//        {
-//            CCLOG(@"line x:%f line y:%f", linePoint.x, linePoint.y);
-//            //todo move player to previous position in line array
-//
-////            CGPoint temp = ccpSub(1, <#(CGPoint const)v2#>)
-//
-//            [self unscheduleUpdate];
-//            [self scheduleUpdate];
-////            CCAction* move = [CCMoveTo actionWithDuration:0.2f position:linePoint];
-////            [self stopAllActions];
-////            [self runAction:move];
-//        }
-//
-//    }
-
-
-
-
 }
-
--(void)centerScreenOnPlayer
-{
-
-}
-
 
 -(void) update:(ccTime)delta
 {
-//    CCLOG(@"delta %f", delta);
-//    travelTime += delta;
-
-
     CGPoint movePosition = ccpLerp(startLocation, endLocation, travelPercent);
-    self.position = movePosition;
-    [self updateVertexZ:movePosition tileMap:currentPlayerMap];
+    CGPoint nextMapMovePosition = ccpLerp(startLocation, endLocation, travelPercent+travelIncrement);
+    CGPoint moveDifference = ccpSub(currentPlayerMap.position, nextMapMovePosition);
+    CGPoint nextPlayerMovePosition = ccpAdd(self.position, moveDifference);
+    CGPoint tilePosition = [IsometricTileMapHelper tilePosFromLocation:self.position tileMap:currentPlayerMap];
+    CGPoint nextPlayerTilePosition = [IsometricTileMapHelper tilePosFromLocation:nextPlayerMovePosition tileMap:currentPlayerMap];
 
-//    currentPlayerMap.position = movePosition;
-
-//    [IsometricTileMapHelper centerTileMapOnTileCoord:movePosition tileMap:currentPlayerMap];
-
+    currentPlayerMap.position = movePosition;
     travelPercent += travelIncrement;
+    [self updateVertexZ:tilePosition tileMap:currentPlayerMap];
 
-//    CCLOG(@"travel percent %f", travelPercent);
-//    CCLOG(@"travel increment %f", travelIncrement);
 
-    if (travelPercent >= 1.0)
+    if ([IsometricTileMapHelper isTilePosBlocked:nextPlayerTilePosition tileMap:currentPlayerMap])
+    {
+        NSLog(@"BLOCKED!");
+        [self unscheduleUpdate];
+    }
+    else if (travelPercent >= 1.0)
     {
         [self unscheduleUpdate];
     }
-
-    //depending on distance, travel percent will change
-
-
-
-
-
-    //camera zoom over player
-
 
 
 }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C1E01AD1635D89B00B93804 /* dg_iso32-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C1E01AC1635D89B00B93804 /* dg_iso32-hd.png */; };
+		9C1E01B01635E1C700B93804 /* Level1-hd.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 9C1E01AF1635E1C700B93804 /* Level1-hd.tmx */; };
+		9C1E01B21635E3F800B93804 /* ninja-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C1E01B11635E3F800B93804 /* ninja-hd.png */; };
 		9C1E5DDE162F144800839D79 /* Author&License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 9C1E5DDA162F144800839D79 /* Author&License.txt */; };
 		9C1E5DDF162F144800839D79 /* dg_grounds32.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C1E5DDB162F144800839D79 /* dg_grounds32.png */; };
 		9C1E5DE0162F144800839D79 /* game-events.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C1E5DDC162F144800839D79 /* game-events.png */; };
@@ -226,6 +229,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9C1E01AC1635D89B00B93804 /* dg_iso32-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dg_iso32-hd.png"; sourceTree = "<group>"; };
+		9C1E01AF1635E1C700B93804 /* Level1-hd.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Level1-hd.tmx"; path = "Resources/David Gervais Tilesets/Level1-hd.tmx"; sourceTree = "<group>"; };
+		9C1E01B11635E3F800B93804 /* ninja-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "ninja-hd.png"; path = "Resources/ninja-hd.png"; sourceTree = "<group>"; };
 		9C1E5DDA162F144800839D79 /* Author&License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Author&License.txt"; sourceTree = "<group>"; };
 		9C1E5DDB162F144800839D79 /* dg_grounds32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dg_grounds32.png; sourceTree = "<group>"; };
 		9C1E5DDC162F144800839D79 /* game-events.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "game-events.png"; sourceTree = "<group>"; };
@@ -633,6 +639,7 @@
 		9C1E5DD9162F144800839D79 /* David Gervais Tilesets */ = {
 			isa = PBXGroup;
 			children = (
+				9C1E01AC1635D89B00B93804 /* dg_iso32-hd.png */,
 				9C2918591630959D0055CB7B /* Level1.tmx */,
 				9CEB39A316305A1F006872B8 /* isometric-with-border.tmx */,
 				9CEB399C163049B9006872B8 /* isometric.tmx */,
@@ -799,6 +806,8 @@
 				9CE2238E1625CB2C00603A52 /* CocosBuilder Scenes */,
 				9CE223641624A3F600603A52 /* ccbResources */,
 				9C543273162DE356008DC555 /* TileMap01.tmx */,
+				9C1E01AF1635E1C700B93804 /* Level1-hd.tmx */,
+				9C1E01B11635E3F800B93804 /* ninja-hd.png */,
 				9C543256162DB4B9008DC555 /* small_button_selected.png */,
 				9C543257162DB4B9008DC555 /* small_button.png */,
 				9CE223811624D1A600603A52 /* options_button_pressed.png */,
@@ -1442,6 +1451,9 @@
 				9C291827163081130055CB7B /* ninja.png in Resources */,
 				9C29185816308EBC0055CB7B /* README.md in Resources */,
 				9C29185A1630959D0055CB7B /* Level1.tmx in Resources */,
+				9C1E01AD1635D89B00B93804 /* dg_iso32-hd.png in Resources */,
+				9C1E01B01635E1C700B93804 /* Level1-hd.tmx in Resources */,
+				9C1E01B21635E3F800B93804 /* ninja-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
