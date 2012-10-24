@@ -8,11 +8,6 @@
 
 typedef enum
 {
-    TileMapNode = 50,
-} Tags;
-
-typedef enum
-{
     LevelSuccess,
     LevelFail,
     LevelQuit,
@@ -23,12 +18,14 @@ typedef enum
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
 #import "Player.h"
+#import "Camera.h"
 
 @interface IsometricGameScene : CCLayer
 {
-    CCTMXTiledMap *levelTileMap;
+    CCTMXTiledMap *levelTiledMap;
     CCTMXLayer *interactionLayer;
     Player *player;
+    Camera *camera;
 
     BOOL isMoving;
     CGPoint startLocation;
@@ -37,8 +34,7 @@ typedef enum
     float travelPercent;
     float travelIncrement;
 
-    CGSize screenSize;
-    CGPoint screenCenter;
+    CCNode *gameNode;
 }
 
 

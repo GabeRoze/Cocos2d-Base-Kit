@@ -8,83 +8,11 @@
 
 #import "IsometricGameScene.h"
 
-
 @implementation IsometricGameScene
 
 -(void)didLoadFromCCB
 {
     [self initLevel:1];
-
-//    levelTileMap = [CCTMXTiledMap tiledMapWithTMXFile:@"isometric.tmx"];
-//    [self addChild:levelTileMap];// z:0 tag:TileMapNode];
-//    levelTileMap.position = CGPointMake(-500, -300);
-
-//    self.isTouchEnabled = YES;
-
-//    CGSize screenSize = CCDirector.sharedDirector.winSize;
-
-//    player = [Player player];
-//    player.position = CGPointMake(screenSize.width*0.5, screenSize.height*0.5);
-//    player.anchorPoint = CGPointMake(0.3f, 0.1f);
-//    [self addChild:player];
-}
-
--(CGPoint) tilePosFromLocation:(CGPoint)location tileMap:(CCTMXTiledMap*)tileMap
-{
-    // Tilemap position must be subtracted, in case the tilemap position is not at 0,0 due to scrolling
-    CGPoint pos = ccpSub(location, tileMap.position);
-
-    float halfMapWidth = tileMap.mapSize.width * 0.5f;
-    float mapHeight = tileMap.mapSize.height;
-    float pointWidth = tileMap.tileSize.width / CC_CONTENT_SCALE_FACTOR();
-    float pointHeight = tileMap.tileSize.height / CC_CONTENT_SCALE_FACTOR();
-
-    CGPoint tilePosDiv = CGPointMake(pos.x / pointWidth, pos.y / pointHeight);
-    float inverseTileY = mapHeight - tilePosDiv.y;
-
-    // Cast to int makes sure that result is in whole numbers, tile coordinates will be used as array indices
-    float posX = (int)(inverseTileY + tilePosDiv.x - halfMapWidth);
-    float posY = (int)(inverseTileY - tilePosDiv.x + halfMapWidth);
-
-    // make sure coordinates are within isomap bounds
-    posX = MAX(0, posX);
-    posX = MIN(tileMap.mapSize.width - 1, posX);
-    posY = MAX(0, posY);
-    posY = MIN(tileMap.mapSize.height - 1, posY);
-
-    pos = CGPointMake(posX, posY);
-
-//    CCLOG(@"touch at (%.0f, %.0f) is at tileCoord (%i, %i)", location.x, location.y, (int)pos.x, (int)pos.y);
-    //CCLOG(@"\tinverseY: %.2f -- tilePosDiv: (%.2f, %.2f) -- halfMapWidth: %.0f\n", inverseTileY, tilePosDiv.x, tilePosDiv.y, halfMapWidth);
-
-    return pos;
-}
-
--(void) centerTileMapOnTileCoord:(CGPoint)tilePos tileMap:(CCTMXTiledMap*)tileMap
-{
-    // center tilemap on the given tile pos
-//    screenSize = [[CCDirector sharedDirector] winSize];
-//    screenCenter = CGPointMake(screenSize.width * 0.5f, screenSize.height * 0.5f);
-
-    // get the ground layer
-    CCTMXLayer* layer = [tileMap layerNamed:@"GroundLayer"];
-    NSAssert(layer != nil, @"Ground layer not found!");
-
-    // internally tile Y coordinates are off by 1, this fixes the returned pixel coordinates
-    tilePos.y -= 1;
-
-    // get the pixel coordinates for a tile at these coordinates
-    CGPoint scrollPosition = [layer positionAt:tilePos];
-    // negate the position for scrolling
-    scrollPosition = ccpMult(scrollPosition, -1);
-    // add offset to screen center
-    scrollPosition = ccpAdd(scrollPosition, screenCenter);
-
-//    CCLOG(@"tilePos: (%i, %i) moveTo: (%.0f, %.0f)", (int)tilePos.x, (int)tilePos.y, scrollPosition.x, scrollPosition.y);
-
-    CCAction* move = [CCMoveTo actionWithDuration:0.2f position:scrollPosition];
-    [tileMap stopAllActions];
-    [tileMap runAction:move];
 }
 
 -(CGPoint) locationFromTouch:(UITouch*)touch
@@ -100,68 +28,71 @@
 -(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     CGPoint touchLocation = [self locationFromTouches:touches];
-//    CGPoint tilePos = [self tilePosFromLocation:touchLocation tileMap:levelTileMap];
-    [player movePlayerToPosition:touchLocation tileMap:levelTileMap];
-//    [player updateVertexZ:tilePos tileMap:levelTileMap];
+    [player movePlayerToPosition:touchLocation tileMap:levelTiledMap];
 }
 
 -(void)initLevel:(int)levelNumber
 {
     NSString *levelName = [NSString stringWithFormat:@"%@%i.tmx", LEVEL_NAME_PREFIX, levelNumber];
 
-    levelTileMap = [CCTMXTiledMap tiledMapWithTMXFile:levelName];
-    [self addChild:levelTileMap z:0];
-    levelTileMap.position = CGPointMake(-500, -300);
+//    gameNode = [CCNode node];
 
+    levelTiledMap = [CCTMXTiledMap tiledMapWithTMXFile:levelName];
+    [self addChild:levelTiledMap z:0];
+//    levelTiledMap.anchorPoint = CGPointMake(0.5f, 0.5f);
+    levelTiledMap.position = CGPointMake(-650, -450);
+//    levelTiledMap.position = screenCenter;
 
-    interactionLayer = [levelTileMap layerNamed:@"InteractionLayer"];
+    interactionLayer = [levelTiledMap layerNamed:@"InteractionLayer"];
     interactionLayer.visible = NO;
-    /*
-    place player
-    center map on player
-     */
-
-    screenSize = CCDirector.sharedDirector.winSize;
-
     player = [Player player];
-    player.position = CGPointMake(screenSize.width*0.5, screenSize.height*0.5);
+    player.position = CGPointMake(Helper.screenSize.width*0.5, Helper.screenSize.height*0.5);
     //modify this to center player on tile (0.5,0.5) original value
-    player.anchorPoint = CGPointMake(0.3f, 0.1f);
+    player.anchorPoint = CGPointMake(0.5f, 0.5f);
+
+//    [gameNode addChild:player];
+//    [gameNode addChild:levelTiledMap];
+
+    player.gameNode = gameNode;
     [self addChild:player];
 
-
     self.isTouchEnabled = YES;
-    [self scheduleUpdate];
 
+    camera = [Camera new];
+    [self addChild:camera];
+//    [camera followPlayer:player withTiledMap:levelTiledMap];
+    [player scheduleUpdate];
+
+//    [self drawBounds];
 }
-
-
 
 -(void)endLevel:(LevelResult)levelResult
 {
 
 }
 
-
-
 -(void) update:(ccTime)delta
 {
-
-    //update player character
-
-//    CGPoint playerPosition = player.position
-
-// if the tilemap is currently being moved, wait until it's done moving
-//    if (levelTileMap.numberOfRunningActions == 0)
-//    {
-//        if ([self isTilePosBlocked:[self tilePosFromLocation:player.position tileMap:levelTileMap] tileMap:levelTileMap])
-//        {
-//            stop movement
-//            [self centerTileMapOnTileCoord:[self tilePosFromLocation:screenCenter tileMap:levelTileMap] tileMap:levelTileMap];
-//            NSLog(@"block");
-//        }
-//    }
-
 }
 
+
+-(void)draw
+{
+
+// Draw the object rectangles for debugging and illustration purposes.
+    float movementBoundsHeight = PLAYER_MOVEMENT_BOUNDING_BOX_HEIGHT;
+    float movementBoundsWidth = PLAYER_MOVEMENT_BOUNDING_BOX_WIDTH;
+    CGRect playerMovementBounds = CGRectMake(Helper.screenCenter.x - movementBoundsWidth/2, Helper.screenCenter.y - movementBoundsHeight/2, movementBoundsWidth, movementBoundsHeight);
+
+    // make the lines thicker
+    glLineWidth(2.0f * CC_CONTENT_SCALE_FACTOR());
+    ccDrawColor4F(1, 0, 1, 1);
+
+    CGPoint dest = CGPointMake(playerMovementBounds.origin.x + playerMovementBounds.size.width, playerMovementBounds.origin.y + playerMovementBounds.size.height);
+
+    ccDrawRect(playerMovementBounds.origin, dest);
+
+    glLineWidth(1.0f);
+
+}
 @end

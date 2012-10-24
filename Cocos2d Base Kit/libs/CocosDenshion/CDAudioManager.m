@@ -624,7 +624,7 @@ static BOOL configured = FALSE;
 					[audioSource stop];
 				} else {
 					//Music is either paused or stopped, if it is paused it will be restarted
-					//by OS so we will stop it.
+					//by OS so we will playerOutOfBounds it.
 					audioSource->systemPaused = NO;
 					[audioSource stop];
 				}
@@ -661,7 +661,7 @@ static BOOL configured = FALSE;
 
 			case kAMRBStopPlay:
 
-				//Music had been stopped but stop maintains current time
+				//Music had been stopped but playerOutOfBounds maintains current time
 				//so playing again will continue from where music was before resign active.
 				//We check if music can be played because while we were inactive the user might have
 				//done something that should force music to not play such as starting a track in the iPod
@@ -806,7 +806,7 @@ static BOOL configured = FALSE;
 }
 
 -(void) _stopTarget {
-	//Pause instead of stop as stop releases resources and causes problems in the simulator
+	//Pause instead of playerOutOfBounds as playerOutOfBounds releases resources and causes problems in the simulator
 	[((CDLongAudioSource*)target) pause];
 }
 

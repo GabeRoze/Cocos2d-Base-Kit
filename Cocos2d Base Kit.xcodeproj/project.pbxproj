@@ -41,7 +41,8 @@
 		9C29185816308EBC0055CB7B /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 9C29184A16308EBC0055CB7B /* README.md */; };
 		9C29185A1630959D0055CB7B /* Level1.tmx in Resources */ = {isa = PBXBuildFile; fileRef = 9C2918591630959D0055CB7B /* Level1.tmx */; };
 		9C29185E1631B7D00055CB7B /* IsometricTileMapHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C29185D1631B7D00055CB7B /* IsometricTileMapHelper.m */; };
-		9C2918611631E6E10055CB7B /* Camera.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C2918601631E6E10055CB7B /* Camera.m */; };
+		9C51C2E016371038006EDA42 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C51C2DF16371038006EDA42 /* Helper.m */; };
+		9C51C2E4163712B1006EDA42 /* Camera.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C51C2E3163712B1006EDA42 /* Camera.m */; };
 		9C543258162DB4B9008DC555 /* small_button_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C543256162DB4B9008DC555 /* small_button_selected.png */; };
 		9C543259162DB4B9008DC555 /* small_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 9C543257162DB4B9008DC555 /* small_button.png */; };
 		9C54326D162DDAB2008DC555 /* OrthogonalGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C54326C162DDAB2008DC555 /* OrthogonalGameScene.m */; };
@@ -278,8 +279,10 @@
 		9C2918591630959D0055CB7B /* Level1.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Level1.tmx; sourceTree = "<group>"; };
 		9C29185C1631B7D00055CB7B /* IsometricTileMapHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IsometricTileMapHelper.h; sourceTree = "<group>"; };
 		9C29185D1631B7D00055CB7B /* IsometricTileMapHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IsometricTileMapHelper.m; sourceTree = "<group>"; };
-		9C29185F1631E6E10055CB7B /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
-		9C2918601631E6E10055CB7B /* Camera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Camera.m; sourceTree = "<group>"; };
+		9C51C2DE16371038006EDA42 /* Helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
+		9C51C2DF16371038006EDA42 /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
+		9C51C2E2163712B1006EDA42 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		9C51C2E3163712B1006EDA42 /* Camera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Camera.m; sourceTree = "<group>"; };
 		9C543256162DB4B9008DC555 /* small_button_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = small_button_selected.png; path = Resources/small_button_selected.png; sourceTree = "<group>"; };
 		9C543257162DB4B9008DC555 /* small_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = small_button.png; path = Resources/small_button.png; sourceTree = "<group>"; };
 		9C54326B162DDAB2008DC555 /* OrthogonalGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrthogonalGameScene.h; sourceTree = "<group>"; };
@@ -725,6 +728,8 @@
 			children = (
 				9C29185C1631B7D00055CB7B /* IsometricTileMapHelper.h */,
 				9C29185D1631B7D00055CB7B /* IsometricTileMapHelper.m */,
+				9C51C2DE16371038006EDA42 /* Helper.h */,
+				9C51C2DF16371038006EDA42 /* Helper.m */,
 			);
 			path = "Isometric Tilemaps";
 			sourceTree = "<group>";
@@ -736,6 +741,8 @@
 				9C54326C162DDAB2008DC555 /* OrthogonalGameScene.m */,
 				9CEB399916304358006872B8 /* IsometricGameScene.h */,
 				9CEB399A16304358006872B8 /* IsometricGameScene.m */,
+				9C51C2E2163712B1006EDA42 /* Camera.h */,
+				9C51C2E3163712B1006EDA42 /* Camera.m */,
 			);
 			name = Game;
 			path = "Cocos2d Base Kit/Game";
@@ -1264,8 +1271,6 @@
 				9CD517BF161E36D1001BF9A7 /* Menus */,
 				9CE2237E1624B47D00603A52 /* GameStateManager.h */,
 				9CE2237F1624B47D00603A52 /* GameStateManager.m */,
-				9C29185F1631E6E10055CB7B /* Camera.h */,
-				9C2918601631E6E10055CB7B /* Camera.m */,
 			);
 			name = Scenes;
 			path = "Loading Scene";
@@ -1498,7 +1503,8 @@
 				9C29185616308EBC0055CB7B /* CCScale9Sprite.m in Sources */,
 				9C29185716308EBC0055CB7B /* Utils.m in Sources */,
 				9C29185E1631B7D00055CB7B /* IsometricTileMapHelper.m in Sources */,
-				9C2918611631E6E10055CB7B /* Camera.m in Sources */,
+				9C51C2E016371038006EDA42 /* Helper.m in Sources */,
+				9C51C2E4163712B1006EDA42 /* Camera.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -121,10 +121,10 @@
 {
 	va_list params;
 	va_start(params,action1);
-	
+
 	CCFiniteTimeAction *now;
 	CCFiniteTimeAction *prev = action1;
-	
+
 	while( action1 ) {
 		now = va_arg(params,CCFiniteTimeAction*);
 		if ( now )
@@ -139,10 +139,10 @@
 +(id) actionWithArray: (NSArray*) actions
 {
 	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
-	
+
 	for (NSUInteger i = 1; i < [actions count]; i++)
 		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
-	
+
 	return prev;
 }
 
@@ -156,19 +156,19 @@
 	NSAssert( one!=nil && two!=nil, @"Sequence: arguments must be non-nil");
 	NSAssert( one!=actions_[0] && one!=actions_[1], @"Sequence: re-init using the same parameters is not supported");
 	NSAssert( two!=actions_[1] && two!=actions_[0], @"Sequence: re-init using the same parameters is not supported");
-	
+
 	ccTime d = [one duration] + [two duration];
-	
+
 	if( (self=[super initWithDuration: d]) ) {
-		
+
 		// XXX: Supports re-init without leaking. Fails if one==one_ || two==two_
 		[actions_[0] release];
 		[actions_[1] release];
-		
+
 		actions_[0] = [one retain];
 		actions_[1] = [two retain];
 	}
-	
+
 	return self;
 }
 
@@ -205,7 +205,7 @@
 {
 	int found = 0;
 	ccTime new_t = 0.0f;
-	
+
 	if( t < split_ ) {
 		// action[0]
 		found = 0;
@@ -222,9 +222,9 @@
 		else
 			new_t = (t-split_) / (1 - split_ );
 	}
-	
+
 	if ( found==1 ) {
-		
+
 		if( last_ == -1 ) {
 			// action[0] was skipped, execute it.
 			[actions_[0] startWithTarget:target_];
@@ -233,16 +233,16 @@
 		}
 		else if( last_ == 0 )
 		{
-			// switching to action 1. stop action 0.
+			// switching to action 1. playerOutOfBounds action 0.
 			[actions_[0] update: 1.0f];
 			[actions_[0] stop];
 		}
 	}
-	
+
 	// New action. Start it.
 	if( found != last_ )
 		[actions_[found] startWithTarget:target_];
-	
+
 	[actions_[found] update: new_t];
 	last_ = found;
 }
@@ -324,13 +324,13 @@
 			[innerAction_ startWithTarget:target_];
 			nextDt_ += [innerAction_ duration]/duration_;
 		}
-		
+
 		// fix for issue #1288, incorrect end value of repeat
-		if(dt >= 1.0f && total_ < times_) 
+		if(dt >= 1.0f && total_ < times_)
 		{
 			total_++;
 		}
-		
+
 		// don't set a instantaction back or update it, it has no use because it has no duration
 		if (!isActionInstant_)
 		{
@@ -1263,7 +1263,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 -(id) initWithAnimation:(CCAnimation*)anim
 {
 	NSAssert( anim!=nil, @"Animate: argument Animation must be non-nil");
-	
+
 	float singleDuration = anim.duration;
 
 	if( (self=[super initWithDuration:singleDuration * anim.loops] ) ) {
@@ -1272,19 +1272,19 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 		self.animation = anim;
 		origFrame_ = nil;
 		executedLoops_ = 0;
-		
+
 		splitTimes_ = [[NSMutableArray alloc] initWithCapacity:anim.frames.count];
-		
+
 		float accumUnitsOfTime = 0;
 		float newUnitOfTimeValue = singleDuration / anim.totalDelayUnits;
-		
+
 		for( CCAnimationFrame *frame in anim.frames ) {
 
 			NSNumber *value = [NSNumber numberWithFloat: (accumUnitsOfTime * newUnitOfTimeValue) / singleDuration];
 			accumUnitsOfTime += frame.delayUnits;
 
 			[splitTimes_ addObject:value];
-		}		
+		}
 	}
 	return self;
 }
@@ -1312,7 +1312,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 	if( animation_.restoreOriginalFrame )
 		origFrame_ = [[sprite displayFrame] retain];
-	
+
 	nextFrame_ = 0;
 	executedLoops_ = 0;
 }
@@ -1329,22 +1329,22 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 -(void) update: (ccTime) t
 {
-	
+
 	// if t==1, ignore. Animation should finish with t==1
 	if( t < 1.0f ) {
 		t *= animation_.loops;
-		
+
 		// new loop?  If so, reset frame counter
 		NSUInteger loopNumber = (NSUInteger)t;
 		if( loopNumber > executedLoops_ ) {
 			nextFrame_ = 0;
 			executedLoops_++;
 		}
-		
+
 		// new t for animations
 		t = fmodf(t, 1.0f);
 	}
-	
+
 	NSArray *frames = [animation_ frames];
 	NSUInteger numberOfFrames = [frames count];
 	CCSpriteFrame *frameToDisplay = nil;
@@ -1356,7 +1356,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 			CCAnimationFrame *frame = [frames objectAtIndex:i];
 			frameToDisplay = [frame spriteFrame];
 			[(CCSprite*)target_ setDisplayFrame: frameToDisplay];
-			
+
 			NSDictionary *dict = [frame userInfo];
 			if( dict )
 				[[NSNotificationCenter defaultCenter] postNotificationName:CCAnimationFrameDisplayedNotification object:target_ userInfo:dict];
@@ -1365,7 +1365,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 			break;
 		}
-	}	
+	}
 }
 
 - (CCActionInterval *) reverse

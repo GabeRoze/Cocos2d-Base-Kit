@@ -14,22 +14,29 @@
 @interface Player : CCSprite
 {
     BOOL isMoving;
-    CGPoint startLocation;
-    CGPoint endLocation;
+//    CGPoint mapStartLocation;
+//    CGPoint mapEndLocation;
 
-//    CGPoint playerStartLocation;
-//    CGPoint playerEndLocation;
+    BOOL playerOutOfBounds;
+    BOOL playerBlocked;
+    CGPoint startPosition;
+//    CGPoint endPosition;
 
-
+    CGRect playerMovementBounds;
     ccTime travelTime;
     float moveDuration;
     float travelPercent;
     float travelIncrement;
 
+    id mapMovement;
+    id layerMovement;
 }
 
+@property (assign, nonatomic) CGPoint endPosition;
 @property (strong, nonatomic) CCTMXTiledMap *currentPlayerMap;
+@property (strong, nonatomic) CCNode *gameNode;
 
++(Player*)instance;
 +(id)player;
 
 -(void) updateVertexZ:(CGPoint)tilePos tileMap:(CCTMXTiledMap*)tileMap;

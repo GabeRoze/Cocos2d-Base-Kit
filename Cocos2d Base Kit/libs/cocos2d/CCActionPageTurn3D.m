@@ -57,12 +57,12 @@
 			float cosBeta = cosf( beta );
 
 			// If beta > PI then we've wrapped around the cone
-			// Reduce the radius to stop these points interfering with others
+			// Reduce the radius to playerOutOfBounds these points interfering with others
 			if( beta <= M_PI)
 				p.x = ( r * sinf(beta));
 			else
 			{
-				// Force X = 0 to stop wrapped
+				// Force X = 0 to playerOutOfBounds wrapped
 				// points
 				p.x = 0;
 			}
