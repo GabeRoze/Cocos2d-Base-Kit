@@ -233,7 +233,7 @@
 		}
 		else if( last_ == 0 )
 		{
-			// switching to action 1. playerOutOfBounds action 0.
+			// switching to action 1. playerReachedBoundary action 0.
 			[actions_[0] update: 1.0f];
 			[actions_[0] stop];
 		}

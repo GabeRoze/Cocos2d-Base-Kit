@@ -46,7 +46,7 @@ enum {
 
 /** The "target". The action will modify the target properties.
  The target will be set with the 'startWithTarget' method.
- When the 'playerOutOfBounds' method is called, target will be set to nil.
+ When the 'playerReachedBoundary' method is called, target will be set to nil.
  The target is 'assigned', it is not 'retained'.
  */
 @property (nonatomic,readonly,assign) id target;
@@ -74,7 +74,7 @@ enum {
 //! called before the action start. It will also set the target.
 -(void) startWithTarget:(id)target;
 //! called after the action has finished. It will set the 'target' to nil.
-//! IMPORTANT: You should never call "[action playerOutOfBounds]" manually. Instead, use: "[target stopAction:action];"
+//! IMPORTANT: You should never call "[action playerReachedBoundary]" manually. Instead, use: "[target stopAction:action];"
 -(void) stop;
 //! called every frame with its delta time. DON'T override unless you know what you are doing.
 -(void) step: (ccTime) dt;

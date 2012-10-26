@@ -17,7 +17,7 @@
 //    CGPoint mapStartLocation;
 //    CGPoint mapEndLocation;
 
-    BOOL playerOutOfBounds;
+    BOOL playerReachedBoundary;
     BOOL playerBlocked;
     CGPoint startPosition;
 //    CGPoint endPosition;

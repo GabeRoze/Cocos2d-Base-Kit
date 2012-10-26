@@ -409,7 +409,7 @@ static BOOL _mixerRateSet = NO;
 			CDLOG(@"Denshion::CDSoundEngine - Found attached source %i %i %i",i,_buffers[soundId].bufferId,_sources[i].sourceId);
 #ifdef CD_USE_STATIC_BUFFERS
 			//When using static buffers a crash may occur if a source is playing with a buffer that is about
-			playerOutOfBounds is confirmed
+			playerReachedBoundary is confirmed
 			//on 2.2.1 and 3.1.2, however, it will only occur if a source is used rapidly after having its prior
 			//data deleted. To avoid any possibility of the crash we wait for the source to finish playing.
 			ALint state;

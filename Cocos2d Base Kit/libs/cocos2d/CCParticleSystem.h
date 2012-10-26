@@ -433,7 +433,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 
 //! Initializes a system with a fixed number of particles
 -(id) initWithTotalParticles:(NSUInteger) numberOfParticles;
-//! playerOutOfBounds emitting particles. Running particles will continue to run until they die
+//! playerReachedBoundary emitting particles. Running particles will continue to run until they die
 -(void) stopSystem;
 //! Kill all living particles.
 -(void) resetSystem;

@@ -19,7 +19,7 @@
 
 //Player config
 #define PLAYER_SPEED 100.0
-#define PLAYER_EASE_RATE 3
+#define PLAYER_EASE_RATE 1
 
 
 #define PLAYER_MOVEMENT_BOUNDING_BOX_HEIGHT 100

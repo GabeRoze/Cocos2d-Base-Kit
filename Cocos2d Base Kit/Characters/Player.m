@@ -48,12 +48,31 @@
     return newPoint;
 }
 
+-(float)setMoveSpeedWithMoveDistance:(float)distance
+{
+    float moveSpeed = PLAYER_SPEED;
+    if (distance < 100)
+    {
+        moveSpeed /=2;
+    }
+    return moveSpeed;
+}
+
 -(void) movePlayerToPosition:(CGPoint)newPosition tileMap:(CCTMXTiledMap *)tileMap
 {
+    //todo if player is still moving
+    /*
+
+    slow down player movment and move to new direction (only if the tap is greater than 90 degrees to the left or right of the direction the player is facing)
+
+     */
+
+
     for(int i= 0; i < 100; i++)
         NSLog(@" ");
 
     [self stopAllActions];
+    [currentPlayerMap stopAllActions];
 
     CCSequence *moveSequence;
     NSMutableArray *playerMoveSequenceArray = [[NSMutableArray alloc] init];
@@ -62,35 +81,31 @@
     float movementBoundsHeight = PLAYER_MOVEMENT_BOUNDING_BOX_HEIGHT;
     float movementBoundsWidth = PLAYER_MOVEMENT_BOUNDING_BOX_WIDTH;
     playerMovementBounds = CGRectMake(Helper.screenCenter.x - movementBoundsWidth/2, Helper.screenCenter.y - movementBoundsHeight/2, movementBoundsWidth, movementBoundsHeight);
-    playerOutOfBounds = NO;
+    playerReachedBoundary = NO;
     travelTime = 0;
     travelPercent = 0;
     currentPlayerMap = tileMap;
     startPosition = self.position;
 
-    endPosition = [self movePoint:self.position withLine:newPosition end:self.position];
+//    endPosition = [self movePoint:self.position withLine:newPosition end:self.position];
+    endPosition = newPosition;
 
     float moveDistance = ccpDistance(startPosition, endPosition);
-    CCLOG(@"move distance %f", moveDistance);
-    float moveSpeed = PLAYER_SPEED;
-    if (moveDistance < 100)
-    {
-        moveSpeed /=2;
-    }
+//    CCLOG(@"move distance %f", moveDistance);
+    float moveSpeed = [self setMoveSpeedWithMoveDistance:moveDistance];
+//    if (moveDistance < 100)
+//    {
+//        moveSpeed /=2;
+//    }
 
     moveDuration = moveDistance/moveSpeed; // in seconds
     float deltaTime = 1.0f/60.0f;//CCDirector.sharedDirector.secondsPerFrame;
     travelIncrement = deltaTime/ moveDuration;
 
-
-
-
-
     //1. check if player hits bounds or walls within bound
     for (travelPercent; travelPercent < 1.0; travelPercent+=travelIncrement)
     {
         CGPoint nextPosition = ccpLerp(startPosition, endPosition, travelPercent);
-//        travelPercent += travelIncrement;
         CGPoint tilePosition = [IsometricTileMapHelper tilePosFromLocation:nextPosition tileMap:currentPlayerMap];
 
 
@@ -108,11 +123,12 @@
                 CCLOG(@"out of bounds");
                 endPosition = ccpLerp(startPosition, endPosition, travelPercent-(travelIncrement*2));
                 moveDistance = ccpDistance(startPosition, endPosition);
+//                moveSpeed = [self setMoveSpeedWithMoveDistance:moveDistance];
                 moveDuration = moveDistance/moveSpeed;
                 id action = [CCMoveTo actionWithDuration:moveDuration position:endPosition];
-                id ease = [CCEaseInOut actionWithAction:action rate:PLAYER_EASE_RATE];
-                [playerMoveSequenceArray addObject:ease];
-                playerOutOfBounds = YES;
+                id ease = [CCEaseIn actionWithAction:action rate:PLAYER_EASE_RATE];
+                [playerMoveSequenceArray addObject:action];
+                playerReachedBoundary = YES;
             }
             travelPercent = 10;
         }
@@ -121,6 +137,7 @@
             CCLOG(@"BLOCKED");
             endPosition = ccpLerp(startPosition, endPosition, travelPercent-(travelIncrement*2));
             moveDistance = ccpDistance(startPosition, endPosition);
+//            moveSpeed = [self setMoveSpeedWithMoveDistance:moveDistance];
             moveDuration = moveDistance/moveSpeed;
             id action = [CCMoveTo actionWithDuration:moveDuration position:endPosition];
             id ease = [CCEaseInOut actionWithAction:action rate:PLAYER_EASE_RATE];
@@ -130,19 +147,71 @@
         }
     }
 
-
-    /*
-
-
-     */
-
-
-    if (playerOutOfBounds)
+    if (playerReachedBoundary)
     {
+        startPosition = endPosition;
+        endPosition = newPosition;
         /*
+        end location = player at boundary point
+        lerp from endlocation to newposition
+        loop through all iterations of lerp
+        set new end position
+        move player to end position
         move map (check for colissions
         center player/map
          */
+        for (travelPercent = 0; travelPercent < 1.0; travelPercent+=travelIncrement)
+        {
+
+            CGPoint nextPosition = ccpLerp(startPosition, endPosition, travelPercent);
+            CGPoint tilePosition = [IsometricTileMapHelper tilePosFromLocation:nextPosition tileMap:currentPlayerMap];
+
+            if ([IsometricTileMapHelper isTilePosBlocked:tilePosition tileMap:currentPlayerMap])
+            {
+                CCLOG(@"BLOCKED");
+                endPosition = ccpLerp(startPosition, endPosition, travelPercent-(travelIncrement*2));
+
+                CGPoint mapEndPosition = [Helper movePoint:currentPlayerMap.position withLine:startPosition end:endPosition];
+                moveDistance = ccpDistance(startPosition, endPosition);
+//                moveSpeed = [self setMoveSpeedWithMoveDistance:moveDistance];
+                moveDuration = moveDistance/moveSpeed;
+                id action = [CCMoveTo actionWithDuration:moveDuration position:mapEndPosition];
+                id ease = [CCEaseOut actionWithAction:action rate:PLAYER_EASE_RATE];
+                mapMovement = ease;
+                id mapMoveAction = [CCCallFunc actionWithTarget:self selector:@selector(moveMap)];
+//                [playerMoveSequenceArray addObject:ease];
+                [playerMoveSequenceArray addObject:mapMoveAction];
+                travelPercent = 10;
+                playerBlocked = YES;
+                CCLOG(@"start pos x%f y%f", startPosition.x, startPosition.y);
+                CCLOG(@"end pos x%f y%f", endPosition.x, endPosition.y);
+                CCLOG(@"move distance %f", moveDistance);
+            }
+        }
+        if (!playerBlocked)
+        {
+            //move chat to end position
+            CCLOG(@"start pos x%f y%f", startPosition.x, startPosition.y);
+            CCLOG(@"end pos x%f y%f", endPosition.x, endPosition.y);
+            endPosition = ccpLerp(startPosition, endPosition, 1.0f);
+            CGPoint mapEndPosition = [Helper movePoint:currentPlayerMap.position withLine:startPosition end:endPosition];
+            moveDistance = ccpDistance(startPosition, endPosition);
+//            moveSpeed = [self setMoveSpeedWithMoveDistance:moveDistance];
+            moveDuration = moveDistance/moveSpeed;
+            id action = [CCMoveTo actionWithDuration:moveDuration position:mapEndPosition];
+            id ease = [CCEaseOut actionWithAction:action rate:PLAYER_EASE_RATE];
+            mapMovement = ease;
+            id mapMoveAction = [CCCallFunc actionWithTarget:self selector:@selector(moveMap)];
+            [playerMoveSequenceArray addObject:mapMoveAction];
+//            [playerMoveSequenceArray addObject:ease];
+//            travelPercent = 10;
+            playerBlocked = NO;
+            CCLOG(@"start pos x%f y%f", startPosition.x, startPosition.y);
+            CCLOG(@"end pos x%f y%f", endPosition.x, endPosition.y);
+            CCLOG(@"move distance %f", moveDistance);
+
+        }
+
     }
     else if (playerBlocked)
     {
@@ -154,41 +223,6 @@
         id ease = [CCEaseInOut actionWithAction:action rate:PLAYER_EASE_RATE];
         [playerMoveSequenceArray addObject:ease];
     }
-
-//    if (playerMoveSequenceArray.count == 0)
-//    {
-//        CCLOG(@"ZERO ARRAY");
-//        id action = [CCMoveTo actionWithDuration:moveDuration position:endPosition];
-//        id ease = [CCEaseInOut actionWithAction:action rate:PLAYER_EASE_RATE];
-//        [playerMoveSequenceArray addObject:ease];
-//    }
-    /*
-    else
-    {
-        //move mother fucken map!
-        //add map movment to sequence
-        //add centering
-        CCLOG(@"MOVE MAP ONLY");
-        CGPoint mapEndPoint = [Helper movePoint:currentPlayerMap.position withLine:endPosition end:newPosition];
-        moveDistance = ccpDistance(endPosition, newPosition);
-        moveDuration = moveDistance/moveSpeed;
-        id action = [CCMoveTo actionWithDuration:moveDuration position:mapEndPoint];
-        mapMovement = [CCEaseInOut actionWithAction:action rate:PLAYER_EASE_RATE];
-        id callFunc = [CCCallFunc actionWithTarget:self selector:@selector(moveMap)];
-        [playerMoveSequenceArray addObject:callFunc];
-
-
-        //center that shit
-//        CGPoint centerGameLayerPoint = [Helper movePoint:gameNode.position withLine:Helper.screenCenter end:newPosition];
-//        moveDistance = ccpDistance(newPosition, Helper.screenCenter);
-//        moveDuration = moveDistance/moveSpeed;
-//        id centerAction = [CCMoveTo actionWithDuration:moveDuration position:centerGameLayerPoint];
-//        layerMovement = [CCEaseInOut actionWithAction:centerAction rate:PLAYER_EASE_RATE];
-//        id centerCallFunc = [CCCallFunc actionWithTarget:self selector:@selector(centerMap)];
-//        [playerMoveSequenceArray addObject:centerCallFunc];
-    }
-*/
-
 
     //todo if moving, perform easy out to slow down on current line then run next action
     //todo
@@ -215,47 +249,8 @@
 
 -(void) update:(ccTime)delta
 {
-//    float x = self.position.x;
-//    float y = self.position.y;
-//
-//    if (x < playerMovementBounds.origin.x
-//            || (x > playerMovementBounds.origin.x+ PLAYER_MOVEMENT_BOUNDING_BOX_WIDTH)
-//            || y < playerMovementBounds.origin.y
-//            || (y > playerMovementBounds.origin.y+ PLAYER_MOVEMENT_BOUNDING_BOX_HEIGHT))
-//    {
-//
-//        NSLog(@"OUT OF BOUND!");
-//        playerOutOfBounds = YES;
-//
-//
-//
-//        [self unscheduleUpdate];
-//    }
-//    else
-//    {
-//        CGPoint playerMovePosition = ccpLerp(startPosition, endPosition, travelPercent);
-//        CGPoint nextPlayerMovePosition = ccpLerp(startPosition, endPosition, travelPercent+travelIncrement);
     CGPoint tilePosition = [IsometricTileMapHelper tilePosFromLocation:self.position tileMap:currentPlayerMap];
-//        CGPoint playerNextTilePosition = [IsometricTileMapHelper tilePosFromLocation:nextPlayerMovePosition tileMap:currentPlayerMap];
-//
-//        self.position = playerMovePosition;
-//
-//        travelPercent += travelIncrement;
-    [self updateVertexZ:tilePosition tileMap:currentPlayerMap];
-//
-//        if ([IsometricTileMapHelper isTilePosBlocked:playerNextTilePosition tileMap:currentPlayerMap])
-//        {
-//            NSLog(@"BLOCKED!");
-//            [self unscheduleUpdate];
-//        }
-//        else if (travelPercent >= 1.0)
-//        {
-//            [self unscheduleUpdate];
-//        }
-//    }
-
-
-
+//    [self updateVertexZ:tilePosition tileMap:currentPlayerMap];
 }
 
 

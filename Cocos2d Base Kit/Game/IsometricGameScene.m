@@ -40,7 +40,8 @@
     levelTiledMap = [CCTMXTiledMap tiledMapWithTMXFile:levelName];
     [self addChild:levelTiledMap z:0];
 //    levelTiledMap.anchorPoint = CGPointMake(0.5f, 0.5f);
-    levelTiledMap.position = CGPointMake(-650, -450);
+//    levelTiledMap.position = CGPointMake(-650, -450);
+    levelTiledMap.position = CGPointMake(-500, -300);
 //    levelTiledMap.position = screenCenter;
 
     interactionLayer = [levelTiledMap layerNamed:@"InteractionLayer"];
@@ -76,6 +77,7 @@
 }
 
 
+/*
 -(void)draw
 {
 
@@ -95,4 +97,5 @@
     glLineWidth(1.0f);
 
 }
+*/
 @end
