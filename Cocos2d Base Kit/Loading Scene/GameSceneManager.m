@@ -1,14 +1,14 @@
 //
-//  GameStateManager.m
+//  GameSceneManager.m
 //  Cocos2d Base Kit
 //
 //  Created by Gabe Rozenberg on 12-10-09.
 //  Copyright 2012 __MyCompanyName__. All rights reserved.
 //
 
-#import "GameStateManager.h"
+#import "GameSceneManager.h"
 
-@implementation GameStateManager
+@implementation GameSceneManager
 
 -(id)init
 {
@@ -46,7 +46,10 @@
             [[CCDirector sharedDirector] replaceScene:[CCBReader sceneWithNodeGraphFromFile:@"OptionsScene.ccbi"]];
             break;
         case TargetSceneBeginGame:
-            [[CCDirector sharedDirector] replaceScene:[CCBReader sceneWithNodeGraphFromFile:@"GameLevelScene.ccbi"]];
+            [[CCDirector sharedDirector] replaceScene:[CCBReader sceneWithNodeGraphFromFile:@"MainGameScene.ccbi"]];
+            break;
+        case TargetSceneIsometricGame:
+            [[CCDirector sharedDirector] replaceScene:[CCBReader sceneWithNodeGraphFromFile:@"IsometricGameScene.ccbi"]];
             break;
         default:
             // Always warn if an unspecified enum value was used. It's a reminder for yourself to update the switch
@@ -56,13 +59,13 @@
     }
 }
 
-+(GameStateManager*)instance
++(GameSceneManager *)instance
 {
-    static GameStateManager* instance = nil;
+    static GameSceneManager * instance = nil;
 
     if (!instance)
     {
-        instance = [GameStateManager new];
+        instance = [GameSceneManager new];
     }
 
     return instance;

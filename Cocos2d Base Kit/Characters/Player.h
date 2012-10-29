@@ -30,17 +30,21 @@
 
     id mapMovement;
     id layerMovement;
+
+    id mapCenterMovement;
+    id playerCenterMovement;
 }
 
 @property (assign, nonatomic) CGPoint endPosition;
 @property (strong, nonatomic) CCTMXTiledMap *currentPlayerMap;
-@property (strong, nonatomic) CCNode *gameNode;
+@property (strong, nonatomic) CCLayer *gameLayer;
 
 +(Player*)instance;
-+(id)player;
+//+(id)player;
++(id)playerWithMap:(CCTMXTiledMap *)map gameLayer:(CCLayer *)layer;
 
 -(void) updateVertexZ:(CGPoint)tilePos tileMap:(CCTMXTiledMap*)tileMap;
--(void) movePlayerToPosition:(CGPoint)newPosition tileMap:(CCTMXTiledMap *)tileMap;
+- (void)movePlayerToPosition:(CGPoint)newPosition;
 
 
 @end

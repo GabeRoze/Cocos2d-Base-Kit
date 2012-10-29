@@ -9,7 +9,7 @@
 #import "cocos2d.h"
 
 #import "AppDelegate.h"
-#import "GameStateManager.h"
+#import "GameSceneManager.h"
 
 @implementation AppController
 
@@ -73,7 +73,7 @@
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 
 	// and add the scene to the stack. The director will run it when it automatically when the view is displayed.
-    [GameStateManager.instance loadSceneWithTargetScene:TargetSceneMainMenu]; //creates the loading scene and loads main menu
+    [GameSceneManager.instance loadSceneWithTargetScene:TargetSceneMainMenu]; //creates the loading scene and loads main menu
 
 //    [director_ pushScene:[CCBReader sceneWithNodeGraphFromFile:@"MainMenu.ccb"]];
 

@@ -7,7 +7,7 @@
 //
 
 #import "MainMenuScene.h"
-#import "GameStateManager.h"
+#import "GameSceneManager.h"
 
 @implementation MainMenuScene
 
@@ -18,14 +18,12 @@
 
 -(void)playTapped:(id)sender
 {
-    CCLOG(@"====PLAY!====");
-    [GameStateManager.instance loadSceneWithTargetScene:TargetSceneBeginGame];
+    [GameSceneManager.instance loadSceneWithTargetScene:TargetSceneBeginGame];
 }
 
 -(void)optionsTapped:(id)sender
 {
-    CCLOG(@"====OPTIONS!====");
-    [GameStateManager.instance loadSceneWithTargetScene:TargetSceneOptionsScene];
+    [GameSceneManager.instance loadSceneWithTargetScene:TargetSceneOptionsScene];
 }
 
 @end

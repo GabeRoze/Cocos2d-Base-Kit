@@ -387,6 +387,8 @@
 										</array>
 									</dict>
 								</array>
+								<key>selected</key>
+								<true/>
 							</dict>
 						</array>
 						<key>customClass</key>
@@ -465,7 +467,7 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>isMouseEnabled</string>
+								<string>mouseEnabled</string>
 								<key>platform</key>
 								<string>Mac</string>
 								<key>type</key>
@@ -678,7 +680,7 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>isMouseEnabled</string>
+						<string>mouseEnabled</string>
 						<key>platform</key>
 						<string>Mac</string>
 						<key>type</key>
@@ -775,7 +777,7 @@
 			</dict>
 			<dict>
 				<key>name</key>
-				<string>isMouseEnabled</string>
+				<string>mouseEnabled</string>
 				<key>platform</key>
 				<string>Mac</string>
 				<key>type</key>
@@ -794,8 +796,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>selected</key>
-		<true/>
 	</dict>
 	<key>notes</key>
 	<array/>

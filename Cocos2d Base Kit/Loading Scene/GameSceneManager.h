@@ -1,5 +1,5 @@
 //
-//  GameStateManager.h
+//  GameSceneManager.h
 //  Cocos2d Base Kit
 //
 //  Created by Gabe Rozenberg on 12-10-09.
@@ -15,14 +15,15 @@ typedef enum
     TargetSceneMainMenu = 1,
     TargetSceneOptionsScene = 2,
     TargetSceneBeginGame = 3,
+    TargetSceneIsometricGame = 4,
 } TargetSceneType;
 
-@interface GameStateManager : CCNode
+@interface GameSceneManager : CCNode
 {
     TargetSceneType nextScene;
 }
 
 -(void)loadSceneWithTargetScene:(TargetSceneType)targetScene;
-+(GameStateManager*)instance;
++(GameSceneManager *)instance;
 
 @end
