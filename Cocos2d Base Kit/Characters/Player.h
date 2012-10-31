@@ -41,7 +41,6 @@
 @property (strong, nonatomic) CCLayer *gameLayer;
 
 +(Player*)instance;
-//+(id)player;
 +(id)playerWithMap:(CCTMXTiledMap *)map gameLayer:(CCLayer *)layer;
 
 -(void) updateVertexZ:(CGPoint)tilePos tileMap:(CCTMXTiledMap*)tileMap;

@@ -226,7 +226,7 @@ static Player* instance;
         }
         if (!playerBlocked)
         {
-            //move chat to end position
+            //move char to end position
             endPosition = ccpLerp(startPosition, endPosition, 1.0f);
             CGPoint mapEndPosition = [Helper movePoint:currentPlayerMap.position withLine:startPosition end:endPosition];
             moveDistance = ccpDistance(startPosition, endPosition);
@@ -236,53 +236,10 @@ static Player* instance;
             mapMovement = ease;
             id mapMoveAction = [CCCallFunc actionWithTarget:self selector:@selector(moveMap)];
             [playerMoveSequenceArray addObject:mapMoveAction];
-
-            /*
-            //center map on player
-            startPosition = finalPlayerPosition;
-            endPosition = Helper.screenCenter;
-            CGPoint mapCenterEndPosition = [Helper movePoint:currentPlayerMap.position withLine:endPosition end:startPosition];
-//            CGPoint playerCenterEndPosition = [Helper movePoint:endPosition withLine:endPosition end:startPosition];
-            moveDistance = ccpDistance(startPosition, endPosition);
-            moveDuration = moveDistance/moveSpeed;
-            id mapCenterAction = [CCMoveTo actionWithDuration:moveDuration position:mapCenterEndPosition];
-            id mapCenterEase = [CCEaseInOut actionWithAction:mapCenterAction];
-            mapCenterMovement = mapCenterEase;
-            id playerCenterAction = [CCMoveTo actionWithDuration:moveDuration position:Helper.screenCenter];
-            id playerCenterEase = [CCEaseSineInOut actionWithAction:playerCenterAction];
-            playerCenterMovement = playerCenterEase;
-
-//            id delayAction = [CCDelayTime actionWithDuration:0.5f];
-//            [playerMoveSequenceArray addObject:delayAction];
-
-*/
-
-//            CGPoint worldspace =  [gameLayer convertToNodeSpace:MainGameScene.instance.position];
-
-
-            startPosition = finalPlayerPosition;
-            endPosition = [Helper screenCenter];
-
-            endPosition = [Helper movePoint:endPosition withLine:CGPointZero end:gameLayer.position];
-
-
-
-            CGPoint layerCenterPosition = [Helper movePoint:gameLayer.position withLine:endPosition end:startPosition];
-            moveDistance = ccpDistance(startPosition, endPosition);
-            moveDuration = (moveDistance/moveSpeed)*2;
-            id layerCenterAction = [CCMoveTo actionWithDuration:moveDuration position:layerCenterPosition];
-            id layerCenterEase = [CCEaseSineInOut actionWithAction:layerCenterAction];
-            layerMovement = layerCenterEase;
-
-            id mapCenterMoveAction = [CCCallFunc actionWithTarget:self selector:@selector(centerMap)];
-            [playerMoveSequenceArray addObject:mapCenterMoveAction];
-
-//            CCLOG(@"new pos x%f y%f", newPosition.x, newPosition.y);
-            CCLOG(@"new game layer at x%f y%f", layerCenterPosition.x, layerCenterPosition.y);
-
-
             playerBlocked = NO;
         }
+        //center map on player
+        [playerMoveSequenceArray addObject:[self centerGameLayerWithFinalPlayerPosition:finalPlayerPosition]];
     }
     else if (playerBlocked)
     {
@@ -305,6 +262,29 @@ static Player* instance;
 
 //    [self unscheduleUpdate];
 //    [self scheduleUpdate];
+}
+
+-(id)centerGameLayerWithFinalPlayerPosition:(CGPoint)finalPlayerPosition
+{
+    startPosition = finalPlayerPosition;
+    endPosition = [Helper screenCenter];
+    endPosition = [Helper movePoint:endPosition withLine:CGPointZero end:gameLayer.position];
+
+    CGPoint layerCenterPosition = [Helper movePoint:gameLayer.position withLine:endPosition end:startPosition];
+    float moveDistance = ccpDistance(startPosition, endPosition);
+    float moveSpeed = [self setMoveSpeedWithMoveDistance:moveDistance];
+    float moveDurationModifier = 1;
+    moveDuration = (moveDistance/moveSpeed)*moveDurationModifier;
+    id layerCenterAction = [CCMoveTo actionWithDuration:moveDuration position:layerCenterPosition];
+    id layerCenterEase = [CCEaseSineInOut actionWithAction:layerCenterAction];
+    layerMovement = layerCenterEase;
+
+    id mapCenterMoveAction = [CCCallFunc actionWithTarget:self selector:@selector(centerMap)];
+
+    return mapCenterMoveAction;
+//    [playerMoveSequenceArray addObject:mapCenterMoveAction];
+//            CCLOG(@"new pos x%f y%f", newPosition.x, newPosition.y);
+//    CCLOG(@"new game layer at x%f y%f", layerCenterPosition.x, layerCenterPosition.y);
 }
 
 -(void)moveMap

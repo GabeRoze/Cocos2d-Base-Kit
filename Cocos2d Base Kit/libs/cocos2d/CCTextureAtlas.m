@@ -113,8 +113,8 @@
 		[self setupIndices];
 
 #if CC_TEXTURE_ATLAS_USE_VAO
-		[self setupVBOandVAO];	
-#else	
+		[self setupVBOandVAO];
+#else
 		[self setupVBO];
 #endif
 
@@ -162,7 +162,7 @@
 		indices_[i*6+0] = i*4+0;
 		indices_[i*6+1] = i*4+1;
 		indices_[i*6+2] = i*4+2;
-		
+
 		// inverted index. issue #179
 		indices_[i*6+3] = i*4+3;
 		indices_[i*6+4] = i*4+2;
@@ -211,18 +211,18 @@
 
 		CHECK_GL_ERROR_DEBUG();
 	};
-	
+
 	NSThread *cocos2dThread = [[CCDirector sharedDirector] runningThread];
 	if( cocos2dThread == [NSThread currentThread] || [[CCConfiguration sharedConfiguration] supportsShareableVAO] )
 		createVAO();
-	else 
+	else
 		[cocos2dThread performBlock:createVAO waitUntilDone:YES];
 }
 #else // CC_TEXTURE_ATLAS_USE_VAO
 -(void) setupVBO
 {
 	glGenBuffers(2, &buffersVBO_[0]);
-	
+
 	[self mapBuffers];
 }
 #endif // ! // CC_TEXTURE_ATLAS_USE_VAO
@@ -509,17 +509,17 @@
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 
 	glBindVertexArray(0);
-	
+
 
 #else // ! CC_TEXTURE_ATLAS_USE_VAO
-	
+
 	//
 	// Using VBO without VAO
 	//
 
 #define kQuadSize sizeof(quads_[0].bl)
 	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
-    
+
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	if (dirty_) {
 		glBufferSubData(GL_ARRAY_BUFFER, sizeof(quads_[0])*start, sizeof(quads_[0]) * n , &quads_[start] );
@@ -529,11 +529,12 @@
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 
 	// vertices
+
 	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, vertices));
-	
+
 	// colors
 	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, colors));
-	
+
 	// tex coords
 	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
 
