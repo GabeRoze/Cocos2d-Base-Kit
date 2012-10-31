@@ -18,7 +18,7 @@
 #define LEVEL_NAME_PREFIX @"Level"
 
 //Player config
-#define PLAYER_SPEED 100.0
+#define PLAYER_SPEED 125.0
 #define PLAYER_EASE_RATE 1
 
 

@@ -25,8 +25,9 @@
 
 -(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    //NEED TO INTERPRET CLICK FOR THE GAME LAYER
     CGPoint touchLocation = [self locationFromTouches:touches];
-    CCLOG(@"touch at x%f y%f", touchLocation.x, touchLocation.y);
+    CCLOG(@"touch location x%f y%f", touchLocation.x, touchLocation.y);
     [Player.instance movePlayerToPosition:touchLocation];
 }
 

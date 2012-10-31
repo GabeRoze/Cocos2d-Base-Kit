@@ -83,7 +83,6 @@
 }
 
 
-
 //Draws the center bounding box
 -(void)draw
 {
@@ -104,5 +103,4 @@
     glLineWidth(1.0f);
 
 }
-
 @end

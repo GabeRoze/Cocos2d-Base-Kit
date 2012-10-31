@@ -8,6 +8,7 @@
 
 #import "Player.h"
 #import "IsometricTileMapHelper.h"
+#import "MainGameScene.h"
 #include <stdlib.h>
 
 @implementation Player
@@ -67,10 +68,37 @@ static Player* instance;
 
 - (void)movePlayerToPosition:(CGPoint)newPosition
 {
+
+    //shit only fucks up when the game layer movies
+
+    //get new position in terms of gamelayer
+    CGPoint gameLayerNewPos = [Helper movePoint:newPosition withLine:CGPointZero end:gameLayer.position];
+    //calculate new move point
+
+    newPosition = gameLayerNewPos;
+
+
+//    newPosition = [Helper movePoint:newPosition withLine:CGPointZero end:gameLayer.position];
+
+    //note - the touch location is on the gameLayer
+//    CCSprite *spr = [CCSprite spriteWithFile:@"ninja.png"];
+//    spr.position = gameLayerNewPos;
+//    [gameLayer addChild:spr];
+
+    CCLOG(@"new pos x%f y%f", newPosition.x, newPosition.y);
+    CCLOG(@"game layer at x%f y%f", gameLayer.position.x, gameLayer.position.y);
+//    CCLOG(@"game layer  anchorat x%f y%f", gameLayer.anchorPoint.x, gameLayer.anchorPoint.y);
+//    CGPoint worldspace =  [gameLayer convertToNodeSpace:MainGameScene.instance.position];
+//    CCLOG(@"world space x%f y%f", worldspace.x, worldspace.y);
+
+
     //todo if player is still moving
-    /*
-    slow down player movment and move to new direction (only if the tap is greater than 90 degrees to the left or right of the direction the player is facing)
-     */
+
+
+    //have players new position
+    //have new gameLayers position
+
+
 
 //    for(int i= 0; i < 100; i++)
 //        NSLog(@" ");
@@ -87,6 +115,11 @@ static Player* instance;
     float movementBoundsWidth = PLAYER_MOVEMENT_BOUNDING_BOX_WIDTH;
     playerMovementBounds = CGRectMake(Helper.screenCenter.x - movementBoundsWidth/2, Helper.screenCenter.y - movementBoundsHeight/2, movementBoundsWidth, movementBoundsHeight);
     playerReachedBoundary = NO;
+
+    playerMovementBounds.origin = [Helper movePoint:playerMovementBounds.origin withLine:CGPointZero end:gameLayer.position];
+
+
+
     travelTime = 0;
     travelPercent = 0;
 //    currentPlayerMap = tileMap;
@@ -94,6 +127,22 @@ static Player* instance;
 
 //    endPosition = [self movePoint:self.position withLine:newPosition end:self.position];
     endPosition = newPosition;
+
+    //ofset everytthing
+
+//    CGPoint add = ccpAdd(CGPointZero, gameLayer.position);
+//    newPosition = ccpAdd(newPosition, add);
+//    startPosition = ccpAdd(startPosition, add);
+//    endPosition = ccpAdd(endPosition, add);
+//    playerMovementBounds.origin = ccpAdd(playerMovementBounds.origin, add);
+
+//    CGPoint diff = ccpSub(self.position, newPosition);
+
+
+//    startPosition = [Helper movePoint:startPosition withLine:CGPointZero end:gameLayer.position];
+//    endPosition = [Helper movePoint:endPosition withLine:CGPointZero end:gameLayer.position];
+//    newPosition = [Helper movePoint:newPosition withLine:CGPointZero end:gameLayer.position];
+//    playerMovementBounds.origin = [Helper movePoint:playerMovementBounds.origin withLine:CGPointZero end:gameLayer.position];
 
     float moveDistance = ccpDistance(startPosition, endPosition);
 //    CCLOG(@"move distance %f", moveDistance);
@@ -207,8 +256,17 @@ static Player* instance;
 //            [playerMoveSequenceArray addObject:delayAction];
 
 */
+
+//            CGPoint worldspace =  [gameLayer convertToNodeSpace:MainGameScene.instance.position];
+
+
             startPosition = finalPlayerPosition;
             endPosition = [Helper screenCenter];
+
+            endPosition = [Helper movePoint:endPosition withLine:CGPointZero end:gameLayer.position];
+
+
+
             CGPoint layerCenterPosition = [Helper movePoint:gameLayer.position withLine:endPosition end:startPosition];
             moveDistance = ccpDistance(startPosition, endPosition);
             moveDuration = (moveDistance/moveSpeed)*2;
@@ -219,7 +277,8 @@ static Player* instance;
             id mapCenterMoveAction = [CCCallFunc actionWithTarget:self selector:@selector(centerMap)];
             [playerMoveSequenceArray addObject:mapCenterMoveAction];
 
-
+//            CCLOG(@"new pos x%f y%f", newPosition.x, newPosition.y);
+            CCLOG(@"new game layer at x%f y%f", layerCenterPosition.x, layerCenterPosition.y);
 
 
             playerBlocked = NO;
@@ -266,7 +325,7 @@ static Player* instance;
 -(void) update:(ccTime)delta
 {
     CGPoint tilePosition = [IsometricTileMapHelper tilePosFromLocation:self.position tileMap:currentPlayerMap];
-//    [self updateVertexZ:tilePosition tileMap:currentPlayerMap];
+    [self updateVertexZ:tilePosition tileMap:currentPlayerMap];
 }
 
 
