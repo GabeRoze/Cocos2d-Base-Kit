@@ -7,6 +7,7 @@
 //
 
 #import "IsometricGameScene.h"
+#import "IsometricTileMapHelper.h"
 
 @implementation IsometricGameScene
 
@@ -35,42 +36,28 @@
 {
     NSString *levelName = [NSString stringWithFormat:@"%@%i.tmx", LEVEL_NAME_PREFIX, levelNumber];
 
-//    gameLayer = [CCNode node];
     gameLayer = [CCLayer node];
 
 
     levelTiledMap = [CCTMXTiledMap tiledMapWithTMXFile:levelName];
+    CGPoint startPos = [IsometricTileMapHelper getStartPosForTileMap:levelTiledMap];
+    [IsometricTileMapHelper centerTileMap:levelTiledMap onTileMapPosition:startPos];
     [gameLayer addChild:levelTiledMap z:0];
-//    levelTiledMap.anchorPoint = CGPointMake(0.5f, 0.5f);
-//    levelTiledMap.position = CGPointMake(-650, -450);
-    levelTiledMap.position = CGPointMake(-500, -300);
-//    levelTiledMap.position = screenCenter;
+
 
     interactionLayer = [levelTiledMap layerNamed:@"InteractionLayer"];
     interactionLayer.visible = NO;
-//    player = [Player player];
-//    player = Player.instance;
+
     player = [Player playerWithMap:levelTiledMap gameLayer:gameLayer];
-
-
-//    player.position = CGPointMake(Helper.screenSize.width*0.5, Helper.screenSize.height*0.5);
     player.position = Helper.screenCenter;
     player.anchorPoint = CGPointMake(0.5f, 0.5f);
-//    player.currentPlayerMap = levelTiledMap;
-
     [gameLayer addChild:player];
-
-//    player.gameLayer = gameLayer;
-//    [gameLayer addChild:player];
 
     [self addChild:gameLayer];
 
     self.isTouchEnabled = YES;
 
-//    [camera followPlayer:player withTiledMap:levelTiledMap];
     [player scheduleUpdate];
-
-//    [self drawBounds];
 }
 
 -(void)endLevel:(LevelResult)levelResult
