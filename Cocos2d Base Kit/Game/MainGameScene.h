@@ -18,5 +18,6 @@
 
 
 -(void)pause;
+
 +(MainGameScene*)instance;
 @end

@@ -14,13 +14,10 @@
 
 + (CGPoint)getStartPosForTileMap:(CCTMXTiledMap *)tileMap
 {
-    //iterate through all tiles
-    //return starting point
     CGPoint startTile = CGPointZero;
-
     CCTMXLayer *layer = [tileMap layerNamed:@"InteractionLayer"];
-
     CGSize s = [layer layerSize];
+
     for (int x = 0; x < s.width; x++)
     {
         for (int y = 0; y < s.height; y++)
@@ -28,47 +25,22 @@
             unsigned int tileGid = [layer tileGIDAt:ccp(x, y)];
             if (tileGid > 0)
             {
-                CCLOG(@"tile gid %i", tileGid);
                 NSDictionary *tileProperties = [tileMap propertiesForGID:tileGid];
                 id isStartTile = [tileProperties objectForKey:@"startTile"];
                 if (isStartTile)
                 {
                     startTile = ccp(x, y);
-//                    startTile.y -=1;
-                    CCLOG(@"start tile x%f y%f", startTile.x, startTile.y);
-//
-//                    get the pixel coordinates for a tile at these coordinates
-//                    CGPoint scrollPosition = [layer positionAt:startTile];
-//                    CCLOG(@"scroll pos x%f y%f", scrollPosition.x, scrollPosition.y);
-//                    negate the position for scrolling
-//                    scrollPosition = ccpMult(scrollPosition, -1);
-//                    add offset to screen center
-//                    scrollPosition = ccpAdd(scrollPosition, Helper.screenCenter);
-//                    CCLOG(@"scroll pos x%f y%f", scrollPosition.x, scrollPosition.y);
-//                    startTile = scrollPosition;
-
                 }
             }
         }
     }
-
     return startTile;
-
-//    unsigned int tileGID = [layer tileGIDAt:tilePos];
-//    if (tileGID > 0)
-//    {
-//        NSDictionary *tileProperties = [tileMap propertiesForGID:tileGID];
-//        id blocks_movement = [tileProperties objectForKey:@"wall"];
-//        isBlocked = (blocks_movement != nil);
-//    }
-//    return isBlocked;
 }
 
 + (void)centerTileMap:(CCTMXTiledMap *)map onTileMapPosition:(CGPoint)centerPosition
 {
     // get the ground layer
     CCTMXLayer *layer = [map layerNamed:@"GroundLayer"];
-    NSAssert(layer != nil, @"Ground layer not found!");
 
     // internally tile Y coordinates are off by 1, this fixes the returned pixel coordinates
     centerPosition.y -= 1;
@@ -80,12 +52,7 @@
     // add offset to screen center
     scrollPosition = ccpAdd(scrollPosition, Helper.screenCenter);
 
-//    CCLOG(@"tilePos: (%i, %i) moveTo: (%.0f, %.0f)", (int)tilePos.x, (int)tilePos.y, scrollPosition.x, scrollPosition.y);
-
     map.position = scrollPosition;
-//    CCAction *move = [CCMoveTo actionWithDuration:0.2f position:scrollPosition];
-//    [map stopAllActions];
-//    [map runAction:move];
 }
 
 
@@ -140,7 +107,18 @@
 
 + (BOOL)isTileEndOfLevel:(CGPoint)charPos tileMap:(CCTMXTiledMap *)tileMap
 {
+    CGPoint tilePos = [IsometricTileMapHelper tilePosFromLocation:charPos tileMap:tileMap];
+    CCTMXLayer *layer = [tileMap layerNamed:@"InteractionLayer"];
 
+    BOOL isEndTile = NO;
+    unsigned int tileGID = [layer tileGIDAt:tilePos];
+    if (tileGID > 0)
+    {
+        NSDictionary *tileProperties = [tileMap propertiesForGID:tileGID];
+        id blocks_movement = [tileProperties objectForKey:@"endTile"];
+        isEndTile = (blocks_movement != nil);
+    }
+    return isEndTile;
 }
 
 + (void)centerTileMapOnTileCoord:(CGPoint)tilePos tileMap:(CCTMXTiledMap *)tileMap

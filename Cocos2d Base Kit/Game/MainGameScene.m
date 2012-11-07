@@ -24,18 +24,14 @@ static MainGameScene *instance;
 {
     instance = self;
     //todo switch game scene to desired game type
-//    [GameSceneManager.instance loadSceneWithTargetScene:TargetSceneIsometricGame]; //creates the loading scene and loads main menu
-//    [[CCDirector sharedDirector] replaceScene:[CCBReader sceneWithNodeGraphFromFile:@"IsometricGameScene.ccbi"]];
 
 //    CCLayer gameLayer = [CCBReader scene]
     CCNode *node = [CCBReader nodeGraphFromFile:@"IsometricGameScene.ccbi"];
     IsometricGameScene *isometricGameScene = (IsometricGameScene *)node;
     [isometricGameScene initLevel:1];
-//    CCScene *gameScene = [CCBReader sceneWithNodeGraphFromFile:@"IsometricGameScene.ccbi"];
 
 //    [gameScene initLevel:1];
     [self addChild:isometricGameScene z:1];
-
 
     CCScene *userInterfaceScene = [CCBReader sceneWithNodeGraphFromFile:@"UserInterfaceScene.ccbi"];
     [self addChild:userInterfaceScene z:0];
@@ -45,6 +41,7 @@ static MainGameScene *instance;
 {
     [[CCDirector sharedDirector] pause];
 
+    //todo present a pause overlay screen? or go with something more simple
     [AlertHelper displayAlertWithTitle:@"Game Paused"
                                message:nil
                            firstButton:@"Resume" firstAction:^{
@@ -56,7 +53,13 @@ static MainGameScene *instance;
 
 -(void)gameOver
 {
+    //todo present player with the game over scene (overlay) with their options (retry, main menu)
+}
 
+-(void)levelSuccess:(int)levelNumber
+{
+    //todo present level victory screen showing what you've won
+    //take user to the level select scene
 }
 
 -(void) returnToMainMenu
@@ -66,8 +69,10 @@ static MainGameScene *instance;
     [GameSceneManager.instance loadSceneWithTargetScene:TargetSceneMainMenu];
 }
 
--(void)restartGame
+-(void)restartLevel
 {
+    //todo restart game
+
     [self unscheduleAllSelectors];
     [[CCDirector sharedDirector] resume];
 //    LoadingScene *loadingScene = [LoadingScene sceneWithTargetScene:TargetSceneMultiLayerGameScene];

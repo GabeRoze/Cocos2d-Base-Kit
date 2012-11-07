@@ -4,7 +4,7 @@
   <image source="dg_iso32-hd.png" width="1512" height="1470"/>
   <tile id="24">
    <properties>
-    <property name="endtile" value="YES"/>
+    <property name="endTile" value="YES"/>
    </properties>
   </tile>
   <tile id="26">
@@ -62,7 +62,7 @@
  </layer>
  <layer name="InteractionLayer" width="50" height="50">
   <data encoding="base64" compression="zlib">
-   eJztz7kNADAMAzGvYXj/PdNkBz8ggeulCAAAAAAAYJL8bXflB8AU1T0AAGCBB/TeAIA=
+   eJztz7ERACAIA0DW8Nx/T0eQSoT7b5MiiQAAAAAAAF5aifzW6WDKD4Bf7OoBAAANHHdQAJk=
   </data>
  </layer>
 </map>

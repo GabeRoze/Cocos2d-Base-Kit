@@ -11,28 +11,11 @@
 
 @implementation IsometricGameScene
 
--(void)didLoadFromCCB
+- (void)didLoadFromCCB
 {
-//    [self initLevel:1];
 }
 
-//-(CGPoint) locationFromTouch:(UITouch*)touch
-//{
-//    return [CCDirector.sharedDirector convertToGL:[touch locationInView:touch.view]];
-//}
-//
-//-(CGPoint) locationFromTouches:(NSSet*)touches
-//{
-//    return [self locationFromTouch:touches.anyObject];
-//}
-//
-//-(void) ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//    CGPoint touchLocation = [self locationFromTouches:touches];
-//    [player movePlayerToPosition:touchLocation tileMap:levelTiledMap];
-//}
-
--(void)initLevel:(int)levelNumber
+- (void)initLevel:(int)levelNumber
 {
     NSString *levelName = [NSString stringWithFormat:@"%@%i.tmx", LEVEL_NAME_PREFIX, levelNumber];
 
@@ -58,26 +41,29 @@
     self.isTouchEnabled = YES;
 
     [player scheduleUpdate];
+    [self scheduleUpdate];
 }
 
--(void)endLevel:(LevelResult)levelResult
+- (void)endLevel:(LevelResult)levelResult
 {
 
 }
 
--(void) update:(ccTime)delta
+- (void)update:(ccTime)delta
 {
+    if ([IsometricTileMapHelper isTileEndOfLevel:player.position tileMap:levelTiledMap])
+    {
+        [self endLevel:LevelWon];
+    }
 }
-
 
 //Draws the center bounding box
--(void)draw
+- (void)draw
 {
-
-// Draw the object rectangles for debugging and illustration purposes.
+    // Draw the object rectangles for debugging and illustration purposes.
     float movementBoundsHeight = PLAYER_MOVEMENT_BOUNDING_BOX_HEIGHT;
     float movementBoundsWidth = PLAYER_MOVEMENT_BOUNDING_BOX_WIDTH;
-    CGRect playerMovementBounds = CGRectMake(Helper.screenCenter.x - movementBoundsWidth/2, Helper.screenCenter.y - movementBoundsHeight/2, movementBoundsWidth, movementBoundsHeight);
+    CGRect playerMovementBounds = CGRectMake(Helper.screenCenter.x - movementBoundsWidth / 2, Helper.screenCenter.y - movementBoundsHeight / 2, movementBoundsWidth, movementBoundsHeight);
 
     // make the lines thicker
     glLineWidth(2.0f * CC_CONTENT_SCALE_FACTOR());

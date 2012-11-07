@@ -8,7 +8,7 @@
 
 typedef enum
 {
-    LevelSuccess,
+    LevelWon,
     LevelFail,
     LevelQuit,
     LevelRestart,

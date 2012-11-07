@@ -4,7 +4,7 @@
   <image source="dg_iso32.png" width="756" height="735"/>
   <tile id="24">
    <properties>
-    <property name="endtile" value="YES"/>
+    <property name="endTile" value="YES"/>
    </properties>
   </tile>
   <tile id="26">

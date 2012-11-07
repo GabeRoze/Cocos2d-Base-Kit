@@ -14,6 +14,7 @@
 + (CGPoint)getStartPosForTileMap:(CCTMXTiledMap *)tileMap;
 +(CGPoint) tilePosFromLocation:(CGPoint)location tileMap:(CCTMXTiledMap*)tileMap;
 +(BOOL) isTilePosBlocked:(CGPoint)tilePos tileMap:(CCTMXTiledMap*)tileMap;
++ (BOOL)isTileEndOfLevel:(CGPoint)charPos tileMap:(CCTMXTiledMap *)tileMap;
 +(void) centerTileMapOnTileCoord:(CGPoint)tilePos tileMap:(CCTMXTiledMap*)tileMap;
 
 @end

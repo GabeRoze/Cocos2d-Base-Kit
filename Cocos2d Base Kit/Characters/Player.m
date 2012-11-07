@@ -294,13 +294,8 @@ static Player* instance;
 
 -(void)centerMap
 {
-    CCLOG(@"==================== CENTER =================");
-//    [self runAction:playerCenterMovement];
-//    [currentPlayerMap runAction:mapCenterMovement];
-
     [gameLayer runAction:layerMovement];
 }
-
 
 -(void) update:(ccTime)delta
 {
